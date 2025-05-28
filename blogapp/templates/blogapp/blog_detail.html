@@ -1,0 +1,11 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <h3 class="card-title">{{ blog.title }}</h3>
+    <p class="card-text">{{ blog.content }}</p>
+    <a href="{% url 'blog' %}" class="btn btn-secondary">Back to Blogs</a>
+  </div>
+</div>
+{% endblock %}
