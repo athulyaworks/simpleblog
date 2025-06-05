@@ -1,9 +1,7 @@
-from django.views.generic import TemplateView
-from django.http import Http404
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, CreateView, UpdateView  
+from django.urls import reverse_lazy
 from .models import Blog
-
-# Create your views here.
+from .forms import BlogForm
 
 class BlogPageView(TemplateView):
     template_name = 'blogapp/blog.html'
@@ -13,13 +11,22 @@ class BlogPageView(TemplateView):
         context['blogs'] = Blog.objects.all()
         return context
 
-# Blog Detail Page - shows a single blog using Generic DetailView
 class BlogDetailView(DetailView):
     model = Blog
     template_name = 'blogapp/blog_detail.html'
     context_object_name = 'blog'
 
-# Profile Page - static page
 class ProfilePageView(TemplateView):
     template_name = 'blogapp/profile.html'
 
+class BlogCreateView(CreateView):
+    model = Blog
+    form_class = BlogForm
+    template_name = 'blogapp/add_blog.html'
+    success_url = reverse_lazy('blog')
+
+class BlogUpdateView(UpdateView):  
+    model = Blog
+    form_class = BlogForm
+    template_name = 'blogapp/edit_blog.html'
+    success_url = reverse_lazy('blog')

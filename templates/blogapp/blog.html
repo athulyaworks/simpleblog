@@ -5,15 +5,27 @@
 {% block content %}
 <h1 class="mb-4">Blog Posts</h1>
 
+<a href="{% url 'add_blog' %}" class="btn btn-primary mb-4">Add New Blog</a>
+
 {% for blog in blogs %}
 <div class="card mb-3">
   <div class="card-body">
     <h5 class="card-title">
       <a href="{% url 'blog_detail' blog.id %}" class="text-decoration-none">{{ blog.title }}</a>
     </h5>
+    {% if blog.image %}
+      <img src="{{ blog.image.url }}" class="img-thumbnail mb-2" style="max-height: 200px;" alt="Blog Image">
+    {% endif %}
     <p class="card-text">{{ blog.content|truncatechars:100 }}</p>
+    <p class="text-muted mb-0">
+      By {{ blog.author.name }} | 
+      Category: {{ blog.category.name }} |
+      Published: {{ blog.published_date|date:"F j, Y" }}
+    </p>
   </div>
 </div>
+{% empty %}
+<p>No blog posts found.</p>
 {% endfor %}
 
 {% endblock %}
